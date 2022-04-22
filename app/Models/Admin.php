@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role_id',
         'password',
         'address',
         'phone'
@@ -46,17 +45,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get orders of the user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Order::class);
-    }
-
-    /**
-     * Get images of the user
+     * Get images of the admin
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -66,7 +55,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get comments of the user
+     * Get comments of the admin
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -76,22 +65,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Get favorite products of the user
+     * Get role of the admin
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function favoriteProduct(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(Product::class, 'favorite', 'user_id', 'product_id');
-    }
-
-    /**
-     * Get carts of the user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function carts(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Cart::class);
+        return $this->belongsTo(Role::class);
     }
 }
