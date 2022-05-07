@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\AuthController;
 use App\Http\Controllers\Customer\VerificationController;
 use App\Http\Controllers\Customer\PasswordController;
+use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Customer\ProductDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +35,8 @@ Route::group([
     Route::post('/password/change', [PasswordController::class, 'change'])->middleware('auth');
     Route::post('/password/reset', [PasswordController::class, 'reset'])->name('reset');
 });
+
+//Product routes
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/categories/{id}', [ProductController::class, 'getProductsByCategory']);
