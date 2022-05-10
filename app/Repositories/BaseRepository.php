@@ -51,8 +51,10 @@ abstract class BaseRepository
 
     /**
      * Update a specified model
+     *
+     * @return mixed
      */
-    public function update($id, $data): bool
+    public function update($id, $data)
     {
         $result = $this->show($id);
         if ($result) {
@@ -66,8 +68,10 @@ abstract class BaseRepository
 
     /**
      * Delete a specified model
+     *
+     * @return mixed
      */
-    public function delete($id): bool
+    public function delete($id)
     {
         $result = $this->show($id);
         if ($result) {
