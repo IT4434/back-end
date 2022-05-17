@@ -16,6 +16,11 @@ class ProductService
         $this->productDetailRepository = $productDetailRepository;
     }
 
+    /**
+     * Get list of products
+     *
+     * @return mixed
+     */
     public function index()
     {
         $products = $this->productRepository->index();
@@ -38,5 +43,10 @@ class ProductService
     public function getProductsByCategory($cat_id)
     {
         return $this->productRepository->getProductsByCategory($cat_id);
+    }
+
+    public function store($data)
+    {
+        return $this->productDetailRepository->store($data);
     }
 }

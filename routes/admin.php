@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 //Authentication Routes
 Route::group([
@@ -24,3 +25,16 @@ Route::group([
    Route::put('/{category}', [CategoryController::class, 'update']);
    Route::delete('/{category}', [CategoryController::class, 'destroy']);
 });
+
+Route::group([
+//    'middleware' => 'auth:admin',
+    'prefix' => 'products'
+], function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::get('/{product}', [ProductController::class, 'show']);
+    Route::put('/{product}', [ProductController::class, 'update']);
+    Route::delete('/{product}', [ProductController::class, 'destroy']);
+});
+
+Route::post('/images', [ProductController::class, 'upload']);
