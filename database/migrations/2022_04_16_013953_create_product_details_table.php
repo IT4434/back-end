@@ -17,6 +17,7 @@ class CreateProductDetailsTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products');
             $table->float('price');
+            $table->float('sale');
             $table->unsignedBigInteger('available_quantity');
             $table->dateTime('manufacturing_date');
             $table->string('color');
