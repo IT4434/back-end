@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('product_name');
             $table->string('brand');
-            $table->float('sale');
             $table->string('description');
             $table->unsignedBigInteger('sold_quantity');
             $table->float('rating');
