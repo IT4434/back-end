@@ -47,6 +47,11 @@ class ProductService
 
     public function store($data)
     {
-        return $this->productDetailRepository->store($data);
+        return $this->productRepository->store($data);
+    }
+
+    public function update($id, $data)
+    {
+        return $this->productRepository->update($id, $data);
     }
 }

@@ -26,12 +26,12 @@ class ProductRequest extends FormRequest
         return [
             'product_name' => 'required|string|unique:products',
             'brand' => 'required|string',
-            'sale' => 'required|min:0|max:100|numeric',
+//            'sale' => 'required|min:0|max:100|numeric',
             'description' => 'required|string',
             'sold_quantity' => 'required|numeric|min:0',
             'rating' => 'required|numeric|min:0|max:5',
             'rating_quantity' => 'required|numeric|min:0',
-            'category_id' => 'required|exist:categories',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

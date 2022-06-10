@@ -66,9 +66,23 @@ class ProductController extends Controller
     public function updateImage(ImageRequest $request)
     {
         $file = $request->file('images');
-        $image_size_paths = $this->imageService->resizeImage($file);
-        $s3_paths = $this->imageService->s3UploadImages($image_size_paths);
-        File::delete(array_column($image_size_paths, 'local_path'));
+        $path = $this->imageService->resizeImage($file);
+        $s3_path = $this->imageService->s3UploadImages($path, $request->imageable_type);
 
+        return $this->imageService->storeImagePaths($s3_path, $request->imageable_id, $request->imageable_type);
+    }
+
+    /**
+     * Update product
+     *
+     * @param Product $product
+     * @param ProductRequest $request
+     * @return ProductResource
+     */
+    public function update(Product $product, ProductRequest $request): ProductResource
+    {
+        $result = $this->productService->update($product->id, $request->all());
+
+        return new ProductResource($result);
     }
 }

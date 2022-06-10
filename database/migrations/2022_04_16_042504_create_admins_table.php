@@ -17,7 +17,6 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->foreignId('role_id')->constrained('roles');
             $table->string('address');
             $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();

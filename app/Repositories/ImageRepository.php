@@ -12,14 +12,12 @@ class ImageRepository extends BaseRepository
         return Image::class;
     }
 
-    public function storeImages(int $id,array $paths, string $type)
+    public function storeImages(int $id, string $path, string $type)
     {
-        foreach ($paths as $path) {
-            $this->model->create([
-                'image_path' => $path,
-                'imageable_id' => $id,
-                'imageable_type' => config('const' . $type),
-            ]);
-        }
+        return $this->model->create([
+            'image_path' => $path,
+            'imageable_id' => $id,
+            'imageable_type' => $type,
+        ]);
     }
 }
