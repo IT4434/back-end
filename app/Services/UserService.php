@@ -26,8 +26,10 @@ class UserService
     {
         $password = bcrypt($data['password']);
         $data = array_merge($data, ['password' => $password]);
+        $user = $this->userRepository->store($data);
+        $user->sendEmailVerificationNotification();
 
-        return $this->userRepository->store($data)->sendEmailVerificationNotification();
+        return $user;
     }
 
     /**

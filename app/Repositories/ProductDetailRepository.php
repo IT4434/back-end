@@ -20,6 +20,6 @@ class ProductDetailRepository extends BaseRepository
      */
     public function getAllProductDetails($productId)
     {
-        return $this->model->where('product_id', $productId)->with('product')->get();
+        return $this->model->where('product_id', $productId)->with('images')->get();
     }
 }
