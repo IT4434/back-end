@@ -34,13 +34,13 @@ class ProductController extends Controller
      * Get all details of the product
      *
      * @param Product $product
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return ProductResource
      */
-    public function show(Product $product): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function show(Product $product): ProductResource
     {
         $product->load('productDetails');
 
-        return ProductResource::collection($product);
+        return new ProductResource($product);
     }
 
     /**

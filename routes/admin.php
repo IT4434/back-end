@@ -17,7 +17,7 @@ Route::group([
 
 //Category Routes
 Route::group([
-//    'middleware' => 'auth:admin',
+    'middleware' => 'auth:admin',
     'prefix' => 'categories'
 ], function () {
    Route::get('/', [CategoryController::class, 'index']);
@@ -28,7 +28,7 @@ Route::group([
 });
 
 Route::group([
-//    'middleware' => 'auth:admin',
+    'middleware' => 'auth:admin',
     'prefix' => 'products'
 ], function () {
     Route::get('/', [ProductController::class, 'index']);

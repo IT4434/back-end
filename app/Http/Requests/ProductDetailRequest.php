@@ -29,6 +29,20 @@ class ProductDetailRequest extends FormRequest
             'available_quantity' => 'required|min:0',
             'sale' => 'required|min:0|lt:price',
             'color' => 'required|string',
+            'images' => 'required',
+            'images.*' => 'mimes:jpeg, jpg, png|max:2048',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'images.*.mimes' => 'The images must be a file of type: jpeg, jpg, png.',
         ];
     }
 }

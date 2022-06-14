@@ -7,16 +7,19 @@ use App\Http\Requests\ProductDetailRequest;
 use App\Http\Resources\ProductDetailResource;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Services\ImageService;
 use App\Services\ProductDetailService;
 use Illuminate\Http\Request;
 
 class ProductDetailController extends Controller
 {
     protected $productDetailService;
+    protected $imageService;
 
-    public function __construct(ProductDetailService $productDetailService)
+    public function __construct(ProductDetailService $productDetailService, ImageService $imageService)
     {
         $this->productDetailService = $productDetailService;
+        $this->imageService = $imageService;
     }
     /**
      * Get details of product
@@ -45,8 +48,17 @@ class ProductDetailController extends Controller
      */
     public function store(ProductDetailRequest $request): ProductDetailResource
     {
-        $data = $request->all();
+        // Store product detail
+        $data = $request->except('images');
+        $productDetail = $this->productDetailService->store($data);
 
-        return new ProductDetailResource($this->productDetailService->store($data));
+        // Store image
+        $file = $request->file('images');
+        $path = $this->imageService->resizeImage($file);
+        $s3_path = $this->imageService->s3UploadImages($path, $request->imageable_type);
+        $image = $this->imageService->storeImagePaths($s3_path, $request->imageable_id, $request->imageable_type);
+        $productDetail->load('images');
+
+        return new ProductDetailResource($productDetail);
     }
 }

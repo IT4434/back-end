@@ -71,12 +71,12 @@ class CategoryController extends Controller
     /**
      * Delete specified category
      *
-     * @param int $id
+     * @param Category $category
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id): \Illuminate\Http\JsonResponse
+    public function destroy(Category $category): \Illuminate\Http\JsonResponse
     {
-        $result = $this->categoryService->destroy($id);
+        $result = $this->categoryService->destroy($category->id);
 
         if ($result) {
             return response()->json(['success' => __('Successfully deleted')], config('response.HTTP_OK'));
