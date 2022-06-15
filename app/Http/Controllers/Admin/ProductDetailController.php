@@ -29,16 +29,11 @@ class ProductDetailController extends Controller
      */
     public function index(Product $product): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $productDetails = $product->load('productDetails');
+        $productDetails = $product->productDetails;
         $productDetails->load('images');
 
         return ProductDetailResource::collection($productDetails);
     }
-
-//    public function show(Product $product, ProductDetail $productDetail)
-//    {
-//
-//    }
 
     /**
      * Store new product detail

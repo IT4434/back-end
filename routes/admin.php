@@ -39,7 +39,7 @@ Route::group([
 });
 
 Route::group([
-    //    'middleware' => 'auth:admin',
+    'middleware' => 'auth:admin',
     'prefix' => 'products',
 ], function () {
     Route::get('/{product}/details', [ProductDetailController::class, 'index']);

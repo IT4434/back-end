@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class ProductRequest extends FormRequest
 {
@@ -21,19 +22,42 @@ class ProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
-        return [
-            'product_name' => 'required|string|unique:products',
-            'brand' => 'required|string',
-//            'sale' => 'required|min:0|max:100|numeric',
-            'description' => 'required|string',
-            'sold_quantity' => 'required|numeric|min:0',
-            'rating' => 'required|numeric|min:0|max:5',
-            'rating_quantity' => 'required|numeric|min:0',
-            'category_id' => 'required|exists:categories,id',
-            'images.*' => 'mimes:jpeg, jpg, png|max:2048',
-        ];
+        switch ($request->method())
+        {
+            case 'POST':
+                $validate = [
+                    'product_name' => 'required|string|unique:products',
+                    'brand' => 'required|string',
+                    'description' => 'required|string',
+                    'sold_quantity' => 'required|numeric|min:0',
+                    'rating' => 'required|numeric|min:0|max:5',
+                    'rating_quantity' => 'required|numeric|min:0',
+                    'category_id' => 'required|exists:categories,id',
+                    'images' => ' required',
+                    'images.*' => 'mimes:jpeg, jpg, png|max:2048',
+                ];
+            break;
+
+            case 'PUT':
+                $validate = [
+                    'product_name' => 'required|string|unique:products',
+                    'brand' => 'required|string',
+                    'description' => 'required|string',
+                    'sold_quantity' => 'required|numeric|min:0',
+                    'rating' => 'required|numeric|min:0|max:5',
+                    'rating_quantity' => 'required|numeric|min:0',
+                    'category_id' => 'required|exists:categories,id',
+                    'images.*' => 'mimes:jpeg, jpg, png|max:2048',
+                ];
+            break;
+
+            default:
+                $validate = [];
+            break;
+        }
+        return $validate;
     }
 
     /**
