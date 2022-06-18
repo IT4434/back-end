@@ -59,4 +59,14 @@ class ProductService
     {
         return $this->productRepository->delete($id);
     }
+
+    public function searchProduct($data)
+    {
+        return $this->productRepository->searchProduct($data);
+    }
+
+    public function sortProductByRating($field, $type)
+    {
+        return $this->productRepository->sortProductByRating($field, $type);
+    }
 }

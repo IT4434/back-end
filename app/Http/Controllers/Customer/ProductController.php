@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -46,13 +47,37 @@ class ProductController extends Controller
     /**
      *Get products of a specified category
      *
-     * @param $cat_id
+     * @param Category $category
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getProductsByCategory($cat_id): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function getProductsByCategory(Category $category): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $products = $this->productService->getProductsByCategory($cat_id);
+        $products = $this->productService->getProductsByCategory($category->id);
         $products->load('images');
+
+        return ProductResource::collection($products);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function searchProduct(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        $products = $this->productService->searchProduct($request->input('search'));
+
+        return ProductResource::collection($products);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function sortProduct(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        $field = $request->input('field');
+        $type = $request->input('type');
+        $products = $this->productService->sortProductByRating($field, $type);
 
         return ProductResource::collection($products);
     }

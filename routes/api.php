@@ -37,6 +37,14 @@ Route::group([
 });
 
 //Product routes
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::get('/products/categories/{id}', [ProductController::class, 'getProductsByCategory']);
+Route::group([
+    'prefix' => 'products',
+], function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::get('/{product}', [ProductController::class, 'show']);
+    Route::get('/categories/{category}', [ProductController::class, 'getProductsByCategory']);
+});
+
+// Filter products
+Route::get('/search-products', [ProductController::class, 'searchProduct']);
+Route::get('/sort-products', [ProductController::class, 'sortProduct']);
