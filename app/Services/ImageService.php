@@ -82,8 +82,21 @@ class ImageService
         return Storage::disk('s3')->putFileAs('images/' . $type, $path['local_path'], $path['image_id']);
     }
 
-    public function storeImagePaths(string $path, int $imageable_id, string $imageable_type){
+    public function storeImagePaths(string $path, int $imageable_id, string $imageable_type)
+    {
 
         return $this->imageRepository->storeImages($imageable_id, $path, $imageable_type);
+    }
+
+    public function updateImagePath(string $path, int $imageable_id, string $imageable_type)
+    {
+        return $this->imageRepository->updateImagePath($path, $imageable_id, $imageable_type);
+    }
+
+    public function s3DeleteImages($images)
+    {
+        foreach ($images as $image) {
+            Storage::disk('s3')->delete($image->image_path);
+        }
     }
 }

@@ -17,4 +17,14 @@ class ProductDetailService
     {
         return $this->productDetailRepository->store($data);
     }
+
+    public function update(int $id, array $data)
+    {
+        return $this->productDetailRepository->update($id, $data);
+    }
+
+    public function destroy($id)
+    {
+        return $this->productDetailRepository->delete($id);
+    }
 }

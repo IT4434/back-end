@@ -16,6 +16,7 @@ class ProductDetail extends Model
     public $fillable = [
         'product_id',
         'price',
+        'sale',
         'available_quantity',
         'manufacturing_date',
         'color',

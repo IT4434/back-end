@@ -44,9 +44,9 @@ Route::group([
 ], function () {
     Route::get('/{product}/details', [ProductDetailController::class, 'index']);
     Route::post('/details', [ProductDetailController::class, 'store']);
-    Route::get('/{product}/details/{detail}', [ProductDetailController::class, 'show']);
-    Route::put('/{product}/details/{detail}', [ProductDetailController::class, 'update']);
-    Route::delete('/{product}/details/{detail}', [ProductDetailController::class, 'delete']);
+    Route::get('/details/{productDetail}', [ProductDetailController::class, 'show']);
+    Route::put('/details/{productDetail}', [ProductDetailController::class, 'update']);
+    Route::delete('/details/{productDetail}', [ProductDetailController::class, 'destroy']);
 });
 
 Route::group([

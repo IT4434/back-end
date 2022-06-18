@@ -89,9 +89,24 @@ class ProductController extends Controller
      */
     public function update(Product $product, ProductRequest $request): ProductResource
     {
-        $result = $this->productService->update($product->id, $request->all());
+        $data = $request->except('images');
+        $product = $this->productService->update($product->id, $data);
 
-        return new ProductResource($result);
+        if ($request->file('images')) {
+            // Delete old images
+            $images = $product->images()->get();
+            $this->imageService->s3DeleteImages($images);
+
+            // Update image
+            $file = $request->file('images');
+            $path = $this->imageService->resizeImage($file);
+            $s3_path = $this->imageService->s3UploadImages($path, 'product');
+            $image = $this->imageService->updateImagePath($s3_path, $product->id, 'App\Models\Product');
+        }
+
+        $product->load('images');
+
+        return new ProductResource($product);
     }
 
     /**
@@ -102,9 +117,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): \Illuminate\Http\JsonResponse
     {
+        $images = $product->images()->get();
         $result = $this->productService->destroy($product->id);
 
         if ($result) {
+            $product->images()->delete();
+            $this->imageService->s3DeleteImages($images);
+
             return response()->json(['success' => __('Successfully deleted')], config('response.HTTP_OK'));
         } else {
             return response()->json(['error' => __('Failed to delete')], config('response.HTTP_BAD_REQUEST'));
