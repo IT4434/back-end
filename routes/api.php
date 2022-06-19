@@ -7,7 +7,7 @@ use App\Http\Controllers\Customer\VerificationController;
 use App\Http\Controllers\Customer\PasswordController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProductDetailController;
-
+use App\Http\Controllers\Customer\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,3 +48,13 @@ Route::group([
 // Filter products
 Route::get('/search-products', [ProductController::class, 'searchProduct']);
 Route::get('/sort-products', [ProductController::class, 'sortProduct']);
+
+// Cart routes
+Route::group([
+   'prefix' => 'carts',
+    'middleware' => 'auth',
+], function () {
+    Route::get('/', [CartController::class, 'index']);
+    Route::post('/add', [CartController::class, 'addToCart']);
+    Route::delete('/remove/{cart}', [CartController::class, 'removeCart']);
+});
