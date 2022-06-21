@@ -20,4 +20,22 @@ class UserRepository extends BaseRepository
     {
         return $this->model->where('email', $email)->first();
     }
+
+    public function getFavoriteProduct($user)
+    {
+        $favoriteList = $user->favoriteProduct()->latest()->get();
+        $favoriteList->load('images');
+
+        return $favoriteList;
+    }
+
+    public function addFavoriteProduct($user, $productId)
+    {
+        return $user->favoriteProduct()->attach($productId);
+    }
+
+    public function removeFavoriteProduct($user, $productId)
+    {
+        return $user->favoriteProduct()->detach($productId);
+    }
 }

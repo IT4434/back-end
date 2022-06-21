@@ -8,6 +8,7 @@ use App\Http\Controllers\Customer\PasswordController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProductDetailController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\FavoriteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,10 +52,20 @@ Route::get('/sort-products', [ProductController::class, 'sortProduct']);
 
 // Cart routes
 Route::group([
-   'prefix' => 'carts',
+    'prefix' => 'carts',
     'middleware' => 'auth',
 ], function () {
     Route::get('/', [CartController::class, 'index']);
     Route::post('/add', [CartController::class, 'addToCart']);
     Route::delete('/remove/{cart}', [CartController::class, 'removeCart']);
+});
+
+// Favorite routes
+Route::group([
+    'prefix' => 'favorite',
+    'middleware' => 'auth',
+], function () {
+    Route::get('/list', [FavoriteController::class, 'getFavoriteList']);
+    Route::post('/add', [FavoriteController::class, 'addToFavorite']);
+    Route::post('/remove', [FavoriteController::class, 'removeFavorite']);
 });

@@ -71,6 +71,7 @@ class Product extends Model
      */
     public function favoriteUser(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'favorite', 'product_id', 'user_id');
+        return $this->belongsToMany(User::class, 'favorite', 'product_id', 'user_id')
+            ->withTimestamps();
     }
 }

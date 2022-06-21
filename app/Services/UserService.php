@@ -53,4 +53,19 @@ class UserService
     {
         return $this->userRepository->findUserByEmail($email);
     }
+
+    public function getFavoriteProduct($user): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->userRepository->getFavoriteProduct($user);
+    }
+
+    public function addFavoriteProduct($user, $productId)
+    {
+        return $this->userRepository->addFavoriteProduct($user, $productId);
+    }
+
+    public function removeFavoriteProduct($user, $productId)
+    {
+        return $this->userRepository->removeFavoriteProduct($user, $productId);
+    }
 }

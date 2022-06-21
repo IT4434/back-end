@@ -103,7 +103,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     public function favoriteProduct(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'favorite', 'user_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'favorite', 'user_id', 'product_id')
+            ->withTimestamps();
     }
 
     /**
