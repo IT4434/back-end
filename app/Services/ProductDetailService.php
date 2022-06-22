@@ -27,4 +27,9 @@ class ProductDetailService
     {
         return $this->productDetailRepository->delete($id);
     }
+
+    public function show($id)
+    {
+        return $this->productDetailRepository->show($id);
+    }
 }
