@@ -17,8 +17,6 @@ class ImageResource extends JsonResource
         return [
             'id' => $this->id,
             'image_path' => $this->image_path,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

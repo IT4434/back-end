@@ -77,4 +77,33 @@ class OrderService
 
         return $this->orderRepository->delete($order->id);
     }
+
+    /**
+     * Admin get list of orders
+     *
+     * @return mixed
+     */
+    public function getAllListOrders()
+    {
+        return $this->orderRepository->getAllListOrders();
+    }
+
+    /**
+     * @param Order $order
+     * @param string $status
+     * @return Order
+     */
+    public function updateOrderStatus(Order $order, string $status): Order
+    {
+        return $this->orderRepository->updateOrderStatus($order, $status);
+    }
+
+    /**
+     * @param Order $order
+     * @return false|mixed
+     */
+    public function delete(Order $order)
+    {
+        return $this->orderRepository->delete($order->id);
+    }
 }

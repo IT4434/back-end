@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
@@ -8,7 +8,6 @@ use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
-use function Symfony\Component\Translation\t;
 
 class OrderController extends Controller
 {
@@ -24,9 +23,9 @@ class OrderController extends Controller
      */
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $orderList = $this->orderService->getUserOrders(auth()->user());
+        $orders = $this->orderService->getAllListOrders();
 
-        return OrderResource::collection($orderList);
+        return OrderResource::collection($orders);
     }
 
     /**
@@ -35,18 +34,20 @@ class OrderController extends Controller
      */
     public function show(Order $order): OrderResource
     {
-        $order->load('orderDetails.productDetail.images');
+        $order->load(['user', 'orderDetails.productDetail.images']);
 
         return new OrderResource($order);
     }
 
     /**
      * @param OrderRequest $request
+     * @param Order $order
      * @return OrderResource
      */
-    public function store(OrderRequest $request): OrderResource
+    public function updateOrderStatus(OrderRequest $request, Order $order): OrderResource
     {
-        $order = $this->orderService->createNewOrder($request);
+        $status = $request->input('order_status');
+        $order = $this->orderService->updateOrderStatus($order, $status);
 
         return new OrderResource($order);
     }
@@ -57,16 +58,15 @@ class OrderController extends Controller
      */
     public function destroy(Order $order): \Illuminate\Http\JsonResponse
     {
-        if ($order->order_status != config('const.ORDER_STATUS.PENDING')
-            && $order->order_status != config('const.ORDER_STATUS.COMPLETED')) {
+        if ($order->order_status != config('const.ORDER_STATUS.COMPLETED')) {
             return response()->json(['error' => 'Can not delete this order'], config('response.HTTP_BAD_REQUEST'));
         }
 
-        $result = $this->orderService->deleteOrder($order);
+        $result = $this->orderService->delete($order);
         if ($result) {
-            return response()->json(['success' => 'Successfully deleted order'], config('response.HTTP_OK'));
-        } else{
-            return response()->json(['error' => 'Failed to delete order'], config('response.HTTP_BAD_REQUEST'));
+            return response()->json(['error' => 'Successfully deleted'], config('response.HTTP_OK'));
+        } else {
+            return response()->json(['error' => 'Can not delete this order'], config('response.HTTP_BAD_REQUEST'));
         }
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDetailController;
+use App\Http\Controllers\Admin\OrderController;
 
 //Authentication Routes
 Route::group([
@@ -53,5 +54,16 @@ Route::group([
    'prefix' => 'images'
 ], function () {
     Route::post('/', [ProductController::class, 'updateImage']);
+});
+
+// Order routes
+Route::group([
+    'prefix' => 'orders',
+//    'middleware' => 'auth:admin',
+], function () {
+    Route::get('/', [OrderController::class, 'index']);
+    Route::get('/{order}', [OrderController::class, 'show']);
+    Route::put('/{order}', [OrderController::class, 'updateOrderStatus']);
+    Route::delete('/{order}', [OrderController::class, 'destroy']);
 });
 
