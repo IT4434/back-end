@@ -17,4 +17,9 @@ class OrderDetailRepository extends BaseRepository
     {
         return $this->model->insert($data);
     }
+
+    public function setIsRated($orderDetailId)
+    {
+        return $this->model->update($orderDetailId, ['is_rated' => '1']);
+    }
 }

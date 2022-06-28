@@ -10,6 +10,7 @@ use App\Http\Controllers\Customer\ProductDetailController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\FavoriteController;
 use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,4 +83,12 @@ Route::group([
     Route::get('/{order}', [OrderController::class, 'show']);
     Route::put('/{order}', [OrderController::class, 'update']);
     Route::delete('/{order}', [OrderController::class, 'destroy']);
+});
+
+// Rating Routes
+Route::group([
+    'prefix' => 'ratings',
+    'middleware' => 'auth',
+], function () {
+    Route::post('/{product}', [RatingController::class, 'makeRating']);
 });

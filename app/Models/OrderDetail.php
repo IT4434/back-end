@@ -17,7 +17,8 @@ class OrderDetail extends Model
         'price',
         'quantity',
         'order_id',
-        'product_id'
+        'product_id',
+        'is_rated',
     ];
 
     /**
