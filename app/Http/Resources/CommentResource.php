@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class CommentResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        switch ($this->commentable_type) {
+            case 'App\Models\User':
+                $type = 'User';
+            break;
+
+            case 'App\Models\Admin':
+                $type = 'Admin';
+            break;
+
+            default:
+                $type = '';
+            break;
+        }
+        return [
+            'id' => $this->id,
+            'body' => $this->body,
+            'product_id' => new ProductResource($this->whenLoaded('product')),
+            'commentable_id' => $this->commentable_id,
+            'commentable_type' => $type,
+            'rating' => $this->rating,
+        ];
+    }
+}

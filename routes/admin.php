@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDetailController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\RatingController;
 
 //Authentication Routes
 Route::group([
@@ -59,7 +60,7 @@ Route::group([
 // Order routes
 Route::group([
     'prefix' => 'orders',
-//    'middleware' => 'auth:admin',
+    'middleware' => 'auth:admin',
 ], function () {
     Route::get('/', [OrderController::class, 'index']);
     Route::get('/{order}', [OrderController::class, 'show']);

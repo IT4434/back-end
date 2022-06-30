@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\FavoriteController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\RatingController;
+use App\Http\Controllers\Customer\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,15 @@ Route::group([
     'middleware' => 'auth',
 ], function () {
     Route::post('/{product}', [RatingController::class, 'makeRating']);
+});
+
+// Comment Routes
+Route::group([
+    'prefix' => 'comments',
+    'middleware' => 'auth',
+], function () {
+    Route::get('/', [CommentController::class, 'index']);
+    Route::post('/', [CommentController::class, 'store']);
+    Route::put('/{comment}', [CommentController::class, 'update']);
+    Route::delete('/{comment}', [CommentController::class, 'destroy']);
 });
