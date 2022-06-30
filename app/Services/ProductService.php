@@ -31,7 +31,7 @@ class ProductService
     public function index()
     {
         $products = $this->productRepository->index();
-        $products->load('images');
+        $products->load('images', 'productDetails.images');
 
         return $products;
     }
