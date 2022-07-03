@@ -31,36 +31,23 @@ class ImageService
 
         $image_id = uniqid();
         $local_path = $tmp_dir . '/' . $image_id;
-        Image::make($file)->orientate()->save($local_path);
+        $image = Image::make($file)->orientate();
         $image_path = [
           'image_id' => $image_id,
-          'local_path' => $tmp_dir . '/' . $image_id,
+          'local_path' => $local_path,
         ];
-//        $size_array = [
-//            's' => [1000, 1000],
-//            'l' => [2000, 2000],
-//        ];
-//
-//        $image_size_paths = [];
-//
-//        foreach ($size_array as $key => $value) {
-//            $image_id = uniqid();
-//            $local_path = $tmp_dir . '/' . $image_id;
-//            $image_size_paths[$key] = [
-//                'image_id' => $image_id,
-//                'local_path' => $local_path,
-//            ];
-//
-//            if ($image->height() > $image->width()) {
-//                Image::make($file)->orientate()->widen($value[0], function ($constraint) {
-//                    $constraint->aspectRatio();
-//                })->fit($value[0], $value[1], null, 'center')->save($local_path);
-//            } else {
-//                Image::make($file)->orientate()->heighten($value[0], function ($constraint) {
-//                    $constraint->aspectRatio();
-//                })->fit($value[0], $value[1], null, 'center')->save($local_path);
-//            }
-//        }
+
+        $size = [1500, 1000];
+
+        if ($image->height() > $image->width()) {
+            Image::make($file)->orientate()->widen($size[0], function ($constraint) {
+                $constraint->aspectRatio();
+            })->fit($size[0], $size[1], null, 'center')->save($local_path);
+        } else {
+            Image::make($file)->orientate()->heighten($size[0], function ($constraint) {
+                $constraint->aspectRatio();
+            })->fit($size[0], $size[1], null, 'center')->save($local_path);
+        }
 
         return $image_path;
     }
