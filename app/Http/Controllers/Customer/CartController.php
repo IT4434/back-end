@@ -34,7 +34,8 @@ class CartController extends Controller
     {
         $data = [
             'user_id' => auth()->user()->id,
-            'product_id' => $request->input('product_id')
+            'product_id' => $request->input('product_id'),
+            'quantity' => $request->input('quantity'),
         ];
 
         $cart = $this->cartService->addToCart($data);
