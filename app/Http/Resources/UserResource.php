@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'address' => $this->address,
             'phone' => $this->phone,
+            'is_blocked' => $this->is_blocked,
             'images' => new ImageResource($this->whenLoaded('images')),
         ];
     }

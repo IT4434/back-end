@@ -68,4 +68,14 @@ class UserService
     {
         return $this->userRepository->removeFavoriteProduct($user, $productId);
     }
+
+    public function getUserList()
+    {
+        return $this->userRepository->index();
+    }
+
+    public function blockUser($user_id, $data)
+    {
+        return $this->userRepository->update($user_id, $data);
+    }
 }

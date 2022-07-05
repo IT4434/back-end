@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDetailController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\RatingController;
+use App\Http\Controllers\Admin\UserController;
 
 //Authentication Routes
 Route::group([
@@ -66,5 +66,14 @@ Route::group([
     Route::get('/{order}', [OrderController::class, 'show']);
     Route::put('/{order}', [OrderController::class, 'updateOrderStatus']);
     Route::delete('/{order}', [OrderController::class, 'destroy']);
+});
+
+// User routes
+Route::group([
+    'prefix' => 'users',
+    'middleware' => 'auth:admin',
+], function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::post('/{user}', [UserController::class, 'blockUser']);
 });
 
