@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Comment;
 use App\Models\Product;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\ProductDetailRepository;
@@ -121,5 +122,31 @@ class ProductService
             'rating_quantity' => $newRatingQuantity,
             'rating' => $newRating,
         ];
+    }
+
+    public function recalculateRating(Comment $comment, Product $product)
+    {
+        $deleteRating = $comment->rating;
+        $newRatingQuantity = $product->rating_quantity - 1;
+        $newRating = ($product->rating * $product->rating_quantity - $deleteRating) / $newRatingQuantity;
+
+        $data = [
+            'rating_quantity' => $newRatingQuantity,
+            'rating' => $newRating,
+        ];
+
+        return $this->productRepository->update($product->id, $data);
+    }
+
+    public function updateRating(Comment $comment, Product $product, array $data)
+    {
+        $lastRating = $comment->rating;
+        $recentRating = $data['rating'];
+        $newRating = ($product->rating * $product->rating_quantity - $lastRating + $recentRating) / $product->rating_quantity;
+        $updateData = [
+            'rating' => $newRating,
+        ];
+
+        return $this->productRepository->update($product->id, $updateData);
     }
 }

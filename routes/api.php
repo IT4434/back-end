@@ -98,10 +98,15 @@ Route::group([
 // Comment Routes
 Route::group([
     'prefix' => 'comments',
-    'middleware' => 'auth',
 ], function () {
-    Route::get('/', [CommentController::class, 'index']);
-    Route::post('/', [CommentController::class, 'store']);
+    Route::get('/products/{product}', [CommentController::class, 'index']);
+    Route::get('/{comment}', [CommentController::class, 'show']);
+});
+Route::group([
+    'prefix' => 'comments',
+//    'middleware' => 'auth',
+], function () {
+    Route::post('/products/{product}', [CommentController::class, 'store']);
     Route::put('/{comment}', [CommentController::class, 'update']);
     Route::delete('/{comment}', [CommentController::class, 'destroy']);
 });
@@ -109,7 +114,7 @@ Route::group([
 // Account information
 Route::group([
     'prefix' => 'account',
-//    'middleware' => 'auth',
+    'middleware' => 'auth',
 ], function () {
     Route::get('/{user}', [AccountController::class, 'getAccountInformation']);
     Route::post('/{user}', [AccountController::class, 'updateAccountInformation']);

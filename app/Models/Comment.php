@@ -16,6 +16,7 @@ class Comment extends Model
 
     public $fillable = [
         'body',
+        'rating',
         'product_id',
         'commentable_id',
         'commentable_type',

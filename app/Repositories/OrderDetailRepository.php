@@ -20,6 +20,6 @@ class OrderDetailRepository extends BaseRepository
 
     public function setIsRated($orderDetailId)
     {
-        return $this->model->update($orderDetailId, ['is_rated' => '1']);
+        return $this->update($orderDetailId, ['is_rated' => '1']);
     }
 }
