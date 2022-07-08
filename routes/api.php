@@ -12,6 +12,7 @@ use App\Http\Controllers\Customer\FavoriteController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\Customer\CommentController;
+use App\Http\Controllers\Customer\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,4 +104,13 @@ Route::group([
     Route::post('/', [CommentController::class, 'store']);
     Route::put('/{comment}', [CommentController::class, 'update']);
     Route::delete('/{comment}', [CommentController::class, 'destroy']);
+});
+
+// Account information
+Route::group([
+    'prefix' => 'account',
+//    'middleware' => 'auth',
+], function () {
+    Route::get('/{user}', [AccountController::class, 'getAccountInformation']);
+    Route::post('/{user}', [AccountController::class, 'updateAccountInformation']);
 });

@@ -78,4 +78,14 @@ class UserService
     {
         return $this->userRepository->update($user_id, $data);
     }
+
+    public function updateInfo($user_id, $data)
+    {
+        return $this->userRepository->update($user_id, $data);
+    }
+
+    public function updateAvatar($user_id, $data)
+    {
+
+    }
 }

@@ -14,6 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $images = !$this->images->isEmpty() ? ImageResource::collection($this->images) : '';
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -21,7 +22,7 @@ class UserResource extends JsonResource
             'address' => $this->address,
             'phone' => $this->phone,
             'is_blocked' => $this->is_blocked,
-            'images' => new ImageResource($this->whenLoaded('images')),
+            'images' => $images,
         ];
     }
 }
