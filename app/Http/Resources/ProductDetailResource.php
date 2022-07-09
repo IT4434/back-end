@@ -22,7 +22,7 @@ class ProductDetailResource extends JsonResource
             'manufacturing_date' => $this->manufacturing_date,
             'color' => $this->color,
             'images' => ImageResource::collection($this->whenLoaded('images')),
-//            'product' => new ProductResource($this->whenLoaded('product')),
+            'product' => new ProductResource($this->whenLoaded('product')),
         ];
     }
 }
