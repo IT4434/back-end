@@ -16,6 +16,9 @@ class CartRepository extends BaseRepository
     public function getUserCarts($userId)
     {
         return $this->model->where('user_id', $userId)
-            ->with(['productDetail.images', 'productDetail.product.images'])->latest()->get();
+            ->with(['productDetail.images',
+                'productDetail.product.images',
+                'productDetail.product.productDetails',
+            ])->latest()->get();
     }
 }

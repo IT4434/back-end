@@ -14,6 +14,7 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $images = !$this->images->isEmpty() ? ImageResource::collection($this->images) : '';
         return [
             'id' => $this->id,
             'product_name' => $this->product_name,
@@ -23,7 +24,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'sold_quantity' => $this->sold_quantity,
             'rating' => $this->rating,
-            'images' => ImageResource::collection($this->whenLoaded('images')),
+            'images' => $images,
             'details' => ProductDetailResource::collection($this->whenLoaded('productDetails')),
             'created_at' => $this->created_at,
             'deleted_at' => $this->deleted_at,

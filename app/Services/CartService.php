@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Cart;
 use App\Repositories\CartRepository;
 
 class CartService
@@ -26,5 +27,16 @@ class CartService
     public function removeCart($cartId)
     {
         return $this->cartRepository->delete($cartId);
+    }
+
+    public function updateCart(Cart $cart, array $data)
+    {
+        $cart = $this->cartRepository->update($cart->id, $data);
+        $cart->load(['productDetail.images',
+            'productDetail.product.productDetails',
+            'productDetail.product.images',
+        ]);
+
+        return $cart;
     }
 }

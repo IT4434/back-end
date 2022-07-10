@@ -61,4 +61,14 @@ class CartController extends Controller
             return response()->json(['error' => 'Failed to remove'], 400);
         }
     }
+
+    /**
+     * @param Cart $cart
+     * @param Request $request
+     * @return CartResource
+     */
+    public function updateCart(Cart $cart, Request $request): CartResource
+    {
+        return new CartResource($this->cartService->updateCart($cart, $request->all()));
+    }
 }

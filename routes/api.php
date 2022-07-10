@@ -62,6 +62,7 @@ Route::group([
 ], function () {
     Route::get('/', [CartController::class, 'index']);
     Route::post('/add', [CartController::class, 'addToCart']);
+    Route::put('/{cart}', [CartController::class, 'updateCart']);
     Route::delete('/remove/{cart}', [CartController::class, 'removeCart']);
 });
 
