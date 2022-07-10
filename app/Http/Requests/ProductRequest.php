@@ -42,13 +42,13 @@ class ProductRequest extends FormRequest
 
             case 'PUT':
                 $validate = [
-                    'product_name' => 'required|string|unique:products',
-                    'brand' => 'required|string',
-                    'description' => 'required|string',
-                    'sold_quantity' => 'required|numeric|min:0',
-                    'rating' => 'required|numeric|min:0|max:5',
-                    'rating_quantity' => 'required|numeric|min:0',
-                    'category_id' => 'required|exists:categories,id',
+                    'product_name' => 'string|unique:products',
+                    'brand' => 'string',
+                    'description' => 'string',
+                    'sold_quantity' => 'numeric|min:0',
+                    'rating' => 'numeric|min:0|max:5',
+                    'rating_quantity' => 'numeric|min:0',
+                    'category_id' => 'exists:categories,id',
                     'images.*' => 'mimes:jpeg, jpg, png|max:2048',
                 ];
             break;
