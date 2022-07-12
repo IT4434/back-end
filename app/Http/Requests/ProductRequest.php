@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
         {
             case 'POST':
                 $validate = [
-                    'product_name' => 'required|string|unique:products',
+                    'product_name' => 'required|string|unique:products,product_name',
                     'brand' => 'required|string',
                     'description' => 'required|string',
                     'sold_quantity' => 'required|numeric|min:0',
@@ -42,7 +42,8 @@ class ProductRequest extends FormRequest
 
             case 'PUT':
                 $validate = [
-                    'product_name' => 'string|unique:products',
+                    // unique:table,column,except,idColumn
+                    'product_name' => 'string|unique:products,product_name,'.$this->product->id.',id',
                     'brand' => 'string',
                     'description' => 'string',
                     'sold_quantity' => 'numeric|min:0',

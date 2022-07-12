@@ -25,8 +25,10 @@ class ImageRepository extends BaseRepository
         $image = $this->model->where('imageable_id', $imageable_id)
             ->where('imageable_type', $imageable_type)
             ->first();
-        $image->image_path = $path;
-        $image->save();
+        if ($image) {
+            $image->image_path = $path;
+            $image->save();
+        }
 
         return $image;
     }
