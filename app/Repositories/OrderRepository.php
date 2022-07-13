@@ -17,7 +17,7 @@ class OrderRepository extends BaseRepository
     public function getUserOrders(User $user): \Illuminate\Database\Eloquent\Collection
     {
         $orders = $user->orders()->latest()->get();
-        $orders->load('orderDetails.productDetail.images');
+        $orders->load(['orderDetails.productDetail.images', 'orderDetails.productDetail.product.images']);
 
         return $orders;
     }
