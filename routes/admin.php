@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDetailController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StaticsController;
 
 //Authentication Routes
 Route::group([
@@ -75,5 +76,14 @@ Route::group([
 ], function () {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/{user}', [UserController::class, 'blockUser']);
+});
+
+// Static Route
+Route::group([
+    'prefix' => 'statics',
+    'middleware' => 'auth:admin',
+], function () {
+    Route::get('/month-top-product', [StaticsController::class, 'showTopProductInMonth']);
+    Route::get('/week-top-product', [StaticsController::class, 'showTopProductInWeek']);
 });
 

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Carbon\Carbon;
 
 class ProductRepository extends BaseRepository
 {
@@ -34,5 +35,19 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->orderBy($field, $type)
             ->with('images')->get();
+    }
+
+    public function getTopProductInMonth()
+    {
+        $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d h:i:s');
+
+        return $this->model->selectRaw('products.*, count(*) as total')
+            ->join('product_details', 'product_details.product_id', '=', 'products.id')
+            ->join('order_details', 'order_details.product_id', '=', 'product_details.id')
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->whereDate('orders.created_at', '>=', $startOfMonth)
+            ->groupBy('order_details.product_id')
+            ->orderBy('total', 'DESC')
+            ->get();
     }
 }

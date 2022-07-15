@@ -28,6 +28,13 @@ class ImageRepository extends BaseRepository
         if ($image) {
             $image->image_path = $path;
             $image->save();
+        } else {
+            $data = [
+                'image_path' => $path,
+                'imageable_id' => $imageable_id,
+                'imageable_type' => $imageable_type
+            ];
+            $image = $this->store($data);
         }
 
         return $image;

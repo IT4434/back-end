@@ -32,6 +32,7 @@ class OrderRepository extends BaseRepository
         return $this->model->with([
             'user',
             'orderDetails.productDetail.images',
+            'orderDetails.productDetail.product.images',
         ])->latest()->get();
     }
 

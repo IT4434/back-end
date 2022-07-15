@@ -34,7 +34,11 @@ class OrderController extends Controller
      */
     public function show(Order $order): OrderResource
     {
-        $order->load(['user', 'orderDetails.productDetail.images']);
+        $order->load([
+            'user',
+            'orderDetails.productDetail.images',
+            'orderDetails.productDetail.product.images'
+        ]);
 
         return new OrderResource($order);
     }

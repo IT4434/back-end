@@ -100,7 +100,7 @@ class ProductController extends Controller
             // Update image
             $file = $request->file('images');
             $path = $this->imageService->resizeImage($file);
-            $s3_path = $this->imageService->s3UploadImages($path, 'product');
+            $s3_path = $this->imageService->s3UploadImages($path, 'products');
             $image = $this->imageService->updateImagePath($s3_path, $product->id, 'App\Models\Product');
         }
 
