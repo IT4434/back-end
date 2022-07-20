@@ -150,8 +150,13 @@ class ProductService
         return $this->productRepository->update($product->id, $updateData);
     }
 
-    public function getTopProductInMonth()
+    public function getTopProductInMonth($month)
     {
-        return $this->productRepository->getTopProductInMonth();
+        return $this->productRepository->getTopProductInMonth($month);
+    }
+
+    public function getTopProductInWeek($week)
+    {
+        return $this->productRepository->getTopProductInWeek($week);
     }
 }

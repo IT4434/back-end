@@ -37,17 +37,53 @@ class ProductRepository extends BaseRepository
             ->with('images')->get();
     }
 
-    public function getTopProductInMonth()
+    public function getTopProductInMonth($month)
     {
-        $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d h:i:s');
+        $startOfMonth = Carbon::createFromFormat('m/Y', $month)
+            ->firstOfMonth()
+            ->format('Y-m-d h:i:s');
+        $finishOfMonth = Carbon::createFromFormat('m/Y', $month)
+            ->endOfMonth()
+            ->format('Y-m-d h:i:s');
 
-        return $this->model->selectRaw('products.*, count(*) as total')
+        $listProduct = $this->model->selectRaw('products.*, count(*) as total')
             ->join('product_details', 'product_details.product_id', '=', 'products.id')
             ->join('order_details', 'order_details.product_id', '=', 'product_details.id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
             ->whereDate('orders.created_at', '>=', $startOfMonth)
-            ->groupBy('order_details.product_id')
+            ->whereDate('orders.created_at', '<=', $finishOfMonth)
+            ->groupBy('products.id')
             ->orderBy('total', 'DESC')
             ->get();
+
+        return $listProduct->load([
+            'images',
+//            'productDetails.images'
+        ]);
+    }
+
+    public function getTopProductInWeek($week)
+    {
+        $startOfWeek = Carbon::createFromFormat('m/d/Y', $week)
+            ->firstOfMonth()
+            ->format('Y-m-d h:i:s');
+        $finishOfWeek = Carbon::createFromFormat('m/d/Y', $week)
+            ->endOfMonth()
+            ->format('Y-m-d h:i:s');
+
+        $listProduct = $this->model->selectRaw('products.*, count(*) as total')
+            ->join('product_details', 'product_details.product_id', '=', 'products.id')
+            ->join('order_details', 'order_details.product_id', '=', 'product_details.id')
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->whereDate('orders.created_at', '>=', $startOfWeek)
+            ->whereDate('orders.created_at', '<=', $finishOfWeek)
+            ->groupBy('products.id')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        return $listProduct->load([
+            'images',
+//            'productDetails.images'
+        ]);
     }
 }

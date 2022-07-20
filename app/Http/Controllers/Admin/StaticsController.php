@@ -15,8 +15,13 @@ class StaticsController extends Controller
         $this->productService = $productService;
     }
 
-    public function showTopProductInMonth()
+    public function showTopProductInMonth(Request $request)
     {
-        return $this->productService->getTopProductInMonth();
+        return $this->productService->getTopProductInMonth($request->month);
+    }
+
+    public function showTopProductInWeek(Request $request)
+    {
+        return $this->productService->getTopProductInWeek($request->week);
     }
 }
