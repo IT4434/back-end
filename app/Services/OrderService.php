@@ -106,4 +106,9 @@ class OrderService
     {
         return $this->orderRepository->delete($order->id);
     }
+
+    public function confirmComplete(Order $order)
+    {
+        return $this->orderRepository->update($order->id, ['order_status' => 'Completed']);
+    }
 }

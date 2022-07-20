@@ -86,6 +86,7 @@ Route::group([
     Route::get('/{order}', [OrderController::class, 'show']);
     Route::put('/{order}', [OrderController::class, 'update']);
     Route::delete('/{order}', [OrderController::class, 'destroy']);
+    Route::put('/{order}/confirms', [OrderController::class, 'confirm']);
 });
 
 // Rating Routes

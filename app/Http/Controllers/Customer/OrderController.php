@@ -69,4 +69,14 @@ class OrderController extends Controller
             return response()->json(['error' => 'Failed to delete order'], config('response.HTTP_BAD_REQUEST'));
         }
     }
+
+    public function confirm(Order $order): \Illuminate\Http\JsonResponse
+    {
+        $result = $this->orderService->confirmComplete($order);
+        if ($result) {
+            return response()->json(['success' => 'Completed order'], config('response.HTTP_OK'));
+        } else{
+            return response()->json(['error' => 'Failed to delete order'], config('response.HTTP_BAD_REQUEST'));
+        }
+    }
 }
