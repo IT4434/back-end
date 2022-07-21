@@ -39,4 +39,11 @@ class CartService
 
         return $cart;
     }
+
+    public function clearCart()
+    {
+        $userId = auth()->user()->id;
+
+        return $this->cartRepository->deleteAllCustomerCarts($userId);
+    }
 }

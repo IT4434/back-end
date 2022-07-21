@@ -21,4 +21,10 @@ class CartRepository extends BaseRepository
                 'productDetail.product.productDetails',
             ])->latest()->get();
     }
+
+    public function deleteAllCustomerCarts($userId)
+    {
+        return $this->model->where('user_id', $userId)
+            ->delete();
+    }
 }

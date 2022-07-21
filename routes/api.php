@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\AuthController;
 use App\Http\Controllers\Customer\VerificationController;
 use App\Http\Controllers\Customer\PasswordController;
+use App\Http\Controllers\Customer\CategoryController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ProductDetailController;
 use App\Http\Controllers\Customer\CartController;
@@ -42,6 +43,13 @@ Route::group([
     Route::post('/password/reset', [PasswordController::class, 'reset'])->name('reset');
 });
 
+// Category routes
+Route::group([
+    'prefix' => 'categories'
+], function () {
+    Route::get('/', [CategoryController::class, 'index']);
+});
+
 //Product routes
 Route::group([
     'prefix' => 'products',
@@ -64,6 +72,7 @@ Route::group([
     Route::post('/add', [CartController::class, 'addToCart']);
     Route::put('/{cart}', [CartController::class, 'updateCart']);
     Route::delete('/remove/{cart}', [CartController::class, 'removeCart']);
+    Route::delete('/clear', [CartController::class, 'clearCart']);
 });
 
 // Favorite routes

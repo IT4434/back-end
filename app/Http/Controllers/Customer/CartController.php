@@ -71,4 +71,15 @@ class CartController extends Controller
     {
         return new CartResource($this->cartService->updateCart($cart, $request->all()));
     }
+
+    public function clearCart(): \Illuminate\Http\JsonResponse
+    {
+        $result = $this->cartService->clearCart();
+
+        if (!is_null($result)) {
+            return response()->json(['success' => 'Successfully removed cart'], 200);
+        } else {
+            return response()->json(['error' => 'Failed to remove'], 400);
+        }
+    }
 }
