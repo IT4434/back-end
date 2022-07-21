@@ -45,6 +45,11 @@ class OrderService
         $details = [];
         foreach ($orderDetails as $orderDetail) {
             $product = $this->productDetailService->show($orderDetail['product_id']);
+
+            $productGeneral = $product->product;
+            $productGeneral->sold_quantity = $productGeneral->sold_quantity + $orderDetail['quantity'];
+            $productGeneral->save();
+
             $totalPrice += $product->price;
             $details[] = [
                 'price' => $product->price,
