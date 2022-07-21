@@ -46,7 +46,7 @@ class ProductRepository extends BaseRepository
             ->endOfMonth()
             ->format('Y-m-d h:i:s');
 
-        $listProduct = $this->model->selectRaw('products.*, count(*) as total')
+        $listProduct = $this->model->selectRaw('products.*, sum(order_details.quantity) as total')
             ->join('product_details', 'product_details.product_id', '=', 'products.id')
             ->join('order_details', 'order_details.product_id', '=', 'product_details.id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
@@ -71,7 +71,7 @@ class ProductRepository extends BaseRepository
             ->endOfMonth()
             ->format('Y-m-d h:i:s');
 
-        $listProduct = $this->model->selectRaw('products.*, count(*) as total')
+        $listProduct = $this->model->selectRaw('products.*, sum(order_details.quantity) as total')
             ->join('product_details', 'product_details.product_id', '=', 'products.id')
             ->join('order_details', 'order_details.product_id', '=', 'product_details.id')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')

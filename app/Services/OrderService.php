@@ -50,7 +50,7 @@ class OrderService
             $productGeneral->sold_quantity = $productGeneral->sold_quantity + $orderDetail['quantity'];
             $productGeneral->save();
 
-            $totalPrice += $product->price;
+            $totalPrice += $product->price * ($product->sale / 100);
             $details[] = [
                 'price' => $product->price,
                 'product_id' => $product->id,
