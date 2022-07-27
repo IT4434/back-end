@@ -36,7 +36,7 @@ class CategoryRequest extends FormRequest
             case 'PUT':
                 $validate = [
                     // unique:table,column,except,idColumn
-                    'category_name' => 'required|string|unique:categories,category_name,'.$this->category->id.',id',
+                    'category_name' => 'required|string|unique:categories,category_name,'.$this->category.',id',
                     'place' => 'required|numeric',
                 ];
             break;
